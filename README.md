@@ -116,13 +116,19 @@ jxltool jpeg-untranscode <input.jxl> <output.jpg>   # JXL -> original JPEG
 
 PNM images are read/written as P5 (gray), P6 (RGB), 8 or 16 bits per sample;
 alpha is carried via P7 (PAM) with `TUPLTYPE GRAYSCALE_ALPHA` / `RGB_ALPHA`.
+
 **PFM images (PF/Pf)** carry 32-bit float samples (HDR, values outside
 [0,1] and negative included): they encode as float-sample codestreams
 (fp32 by default, `--float16` as binary16 patterns — the encoder refuses
 values not exactly representable in the target format) and decode back to
-PFM with values bit-identical to `djxl`'s PFM output. `--resampling 2|4|8`
+PFM with values bit-identical to `djxl`'s PFM output.
+
+`--resampling 2|4|8`
 downsamples at encode time (box filter in float space for PFM) and the
-decoder applies the NLEE upsampler. `--group-size-shift` selects the modular group size (128 << shift).
+decoder applies the NLEE upsampler.
+
+`--group-size-shift` selects the modular group size (128 << shift).
+
 `--effort 1..10` mirrors cjxl `-e` (7 = the default kSquirrel heuristics):
 efforts 8-10 are the slower libjxl tiers (kKitten/kTortoise/kGlacier) with
 cost-based palette reverts (`maybe_do_transform`), wider tree-training
@@ -130,11 +136,14 @@ property sets, more RCT candidates (9/19), the weighted-predictor mode
 search (`EstimateWPCost`, per-stream WP headers) and the matching entropy
 parameters (kBest clustering, kLZ77/kOptimal); efforts 1-6 are the faster
 tiers (fixed trees at 1-3, the global YCoCg at 1-4, tightened property
-sets). `--group-order 1` writes the TOC with the center-first section
+sets).
+
+`--group-order 1` writes the TOC with the center-first section
 permutation (cjxl `--group_order=1`): the Lehmer-coded permutation over the
 kPermutationContexts histograms, sections emitted in physical order — the
 written permutation values are identical to cjxl's for the same geometry
 (checked over many layouts, incl. 2-pass progressive frames).
+
 `--responsive 1` enables the Squeeze transform (cjxl `-R 1`),
 `--progressive` / `-p` writes a 2-pass progressive codestream (cjxl `-p`'s
 lossless qprogressive shape: Squeeze residuals split across passes by
