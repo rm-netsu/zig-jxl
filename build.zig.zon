@@ -1,0 +1,17 @@
+.{
+    .name = .jxl,
+    .version = "0.4.0",
+    .fingerprint = 0x19e349691dcf9d1a,
+    .minimum_zig_version = "0.16.0",
+    .dependencies = .{
+        .brotli = .{
+            .url = "https://github.com/rm-netsu/zig-brotli/archive/8f4ae0e4bd1c7e019a863b6e6de304c98bf63644.tar.gz",
+            .hash = "brotli-0.9.0-OU5UeFpqCgBnsB9bgAFKJUznHDooPj1Pnsj4NXoBm6cn",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}
